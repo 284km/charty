@@ -53,6 +53,15 @@ module Charty
         plot.plot(context.series.xs.to_a, context.series.ys.to_a)
       when :scatter
         plot.plot(context.series.xs.to_a, context.series.ys.to_a, ".")
+      when :errorbar
+        plot.errorbar(
+          context.series.xs.to_a,
+          context.series.ys.to_a,
+          context.yerr,
+          context.xerr,
+        )
+      when :hist
+        plot.hist(context.data)
       end
     end
   end
