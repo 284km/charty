@@ -14,6 +14,16 @@ module Charty
       context.apply(@frontend)
     end
 
+    def errorbar(**args, &block)
+      context = RenderContext.new :errorbar, **args, &block
+      context.apply(@frontend)
+    end
+
+    def hist(**args, &block)
+      context = RenderContext.new :hist, **args, &block
+      context.apply(@frontend)
+    end
+
     def layout(definition=:horizontal)
       Layout.new(@frontend, definition)
     end
@@ -22,13 +32,13 @@ module Charty
   Series = Struct.new(:xs, :ys)
 
   class RenderContext
-    attr_reader :function, :range, :series, :method
+    attr_reader :function, :range, :series, :method, :data, :xerr, :yerr
 
     def initialize(method, **args, &block)
       @method = method
       configurator = Configurator.new(**args)
       configurator.instance_eval &block
-      (@range, @series, @function) = configurator.to_a
+      (@range, @series, @function, @data, @xerr, @yerr) = configurator.to_a
     end
 
     class Configurator
@@ -40,6 +50,18 @@ module Charty
         @function = block
       end
 
+      def data(data)
+        @data = data
+      end
+
+      def xerr(xerr)
+        @xerr = xerr
+      end
+
+      def yerr(yerr)
+        @yerr = yerr
+      end
+
       def series(xs, ys)
         @series = Series.new(xs, ys)
       end
@@ -49,7 +71,7 @@ module Charty
       end
 
       def to_a
-        [@range, @series, @function]
+        [@range, @series, @function, @data, @xerr, @yerr]
       end
 
       def method_missing(method, *args)

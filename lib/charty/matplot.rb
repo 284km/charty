@@ -1,3 +1,4 @@
+require 'iruby'
 require 'matplotlib/pyplot'
 require 'matplotlib/iruby'
 
