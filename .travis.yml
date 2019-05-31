@@ -4,8 +4,6 @@ language: ruby
 cache: bundler
 rvm:
   - 2.6.3
-before_install: gem i bundler
-before_script:
-  - PYENV_VERSION=3.6 pip3 install --user matplotlib
-env:
-  - PYENV_VERSION=3.6 PYTHON=python
+before_install:
+  - gem i bundler
+  - pip3 install --user matplotlib
