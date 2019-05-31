@@ -4,6 +4,8 @@ language: ruby
 cache: bundler
 rvm:
   - 2.6.3
+env:
+  - PYENV_VERSION=3.6 PYTHON=python
 before_install:
   - gem i bundler
 before_script:
